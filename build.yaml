@@ -1,5 +1,8 @@
 include:
-  - board: xiao_ble  # ← ここを修正
+  - board: xiao_ble
     shield: 37keys2026_left
-  - board: xiao_ble  # ← ここを修正
+    snippet: studio-rpc-usb-uart  # ★左手側に追記
+
+  - board: xiao_ble
     shield: 37keys2026_right
+    snippet: studio-rpc-usb-uart  # ★右手側にも追記
