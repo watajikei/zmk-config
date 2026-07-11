@@ -1,4 +1,3 @@
-# boards/shields/37keys2026/37keys2026.dtsi
 #include <dt-bindings/zmk/matrix_transform.h>
 
 / {
