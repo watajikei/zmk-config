@@ -1,6 +1,5 @@
 // boards/shields/37keys2026/37keys2026.dtsi
 #include <dt-bindings/zmk/matrix_transform.h>
-#include <dt-bindings/zmk/physical_layouts.h> // ★この辞書ファイルの読み込みを追加しました
 
 / {
     chosen {
@@ -8,7 +7,7 @@
         zmk,matrix-transform = &default_transform;
     };
 
-    /* 左右非対称マトリックス変換テーブル */
+    /* 左右非対称マトリックス変換テーブル（純粋な回路定義のみ） */
     default_transform: matrix_transform {
         compatible = "zmk,matrix-transform";
         rows = <4>;
@@ -27,66 +26,5 @@
         compatible = "zmk,kscan-gpio-matrix";
         wakeup-source;
         diode-direction = "col2row";
-    };
-
-    /* ZMK Studio用の物理レイアウト定義 */
-    layouts {
-        compatible = "zmk,physical-layouts";
-        default_layout: default_layout {
-            compatible = "zmk,physical-layout";
-            display-name = "Default Layout";
-            transform = <&default_transform>;
-            
-            /* 
-             * 各キーの物理属性: <幅 高さ X座標 Y座標 回転角 回転中心X 回転中心Y>
-             * 1U（標準キーサイズ） = 1000 mil として計算。
-             */
-            keys
-                = <&key_physical_attrs 1000 1000    0    0 0 0 0>
-                , <&key_physical_attrs 1000 1000 1000    0 0 0 0>
-                , <&key_physical_attrs 1000 1000 2000    0 0 0 0>
-                , <&key_physical_attrs 1000 1000 3000    0 0 0 0>
-                , <&key_physical_attrs 1000 1000 4000    0 0 0 0>
-                , <&key_physical_attrs 1000 1000 5000    0 0 0 0> // 左手・行0
-
-                , <&key_physical_attrs 1000 1000 8000    0 0 0 0>
-                , <&key_physical_attrs 1000 1000 9000    0 0 0 0>
-                , <&key_physical_attrs 1000 1000 10000   0 0 0 0>
-                , <&key_physical_attrs 1000 1000 11000   0 0 0 0>
-                , <&key_physical_attrs 1000 1000 12000   0 0 0 0> // 右手・行0
-
-                , <&key_physical_attrs 1000 1000    0 1000 0 0 0>
-                , <&key_physical_attrs 1000 1000 1000 1000 0 0 0>
-                , <&key_physical_attrs 1000 1000 2000 1000 0 0 0>
-                , <&key_physical_attrs 1000 1000 3000 1000 0 0 0>
-                , <&key_physical_attrs 1000 1000 4000 1000 0 0 0>
-                , <&key_physical_attrs 1000 1000 5000 1000 0 0 0> // 左手・行1
-
-                , <&key_physical_attrs 1000 1000 8000 1000 0 0 0>
-                , <&key_physical_attrs 1000 1000 9000 1000 0 0 0>
-                , <&key_physical_attrs 1000 1000 10000 1000 0 0 0>
-                , <&key_physical_attrs 1000 1000 11000 1000 0 0 0>
-                , <&key_physical_attrs 1000 1000 12000 1000 0 0 0> // 右手・行1
-
-                , <&key_physical_attrs 1000 1000    0 2000 0 0 0>
-                , <&key_physical_attrs 1000 1000 1000 2000 0 0 0>
-                , <&key_physical_attrs 1000 1000 2000 2000 0 0 0>
-                , <&key_physical_attrs 1000 1000 3000 2000 0 0 0>
-                , <&key_physical_attrs 1000 1000 4000 2000 0 0 0>
-                , <&key_physical_attrs 1000 1000 5000 2000 0 0 0> // 左手・行2
-
-                , <&key_physical_attrs 1000 1000 8000 2000 0 0 0>
-                , <&key_physical_attrs 1000 1000 9000 2000 0 0 0>
-                , <&key_physical_attrs 1000 1000 10000 2000 0 0 0>
-                , <&key_physical_attrs 1000 1000 11000 2000 0 0 0>
-                , <&key_physical_attrs 1000 1000 12000 2000 0 0 0> // 右手・行2
-
-                , <&key_physical_attrs 1000 1000 4000 3000 0 0 0>
-                , <&key_physical_attrs 1000 1000 5000 3000 0 0 0> // 左手・親指
-
-                , <&key_physical_attrs 1000 1000 8000 3000 0 0 0>
-                , <&key_physical_attrs 1000 1000 9000 3000 0 0 0> // 右手・親指
-                ;
-        };
     };
 };
