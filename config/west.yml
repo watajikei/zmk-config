@@ -1,6 +1,6 @@
 manifest:
   defaults:
-    revision: v0.3
+    revision: main  # ← ここを v0.3 から main に変更します
   remotes:
     - name: zmkfirmware
       url-base: https://github.com/zmkfirmware
