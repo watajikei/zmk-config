@@ -1,0 +1,7 @@
+# boards/shields/37keys2026/Kconfig.shield
+
+config SHIELD_37KEYS2026_LEFT
+    def_bool $(shields_list_contains,37keys2026_left)
+
+config SHIELD_37KEYS2026_RIGHT
+    def_bool $(shields_list_contains,37keys2026_right)

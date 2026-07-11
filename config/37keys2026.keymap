@@ -1,0 +1,20 @@
+# config/37keys2026.keymap
+#include <behaviors.dtsi>
+#include <dt-bindings/zmk/keys.h>
+
+/ {
+    keymap {
+        compatible = "zmk,keymap";
+
+        default_layer {
+            bindings = <
+            /* 左手メイン（18キー） */                       /* 右手メイン（15キー） */
+            &kp TAB   &kp Q &kp W &kp E &kp R &kp T        &kp Y &kp U &kp I     &kp O   &kp P
+            &kp LCTRL &kp A &kp S &kp D &kp F &kp G        &kp H &kp J &kp K     &kp L   &kp MINUS
+            &kp LSHFT &kp Z &kp X &kp C &kp V &kp B        &kp N &kp M &kp COMMA &kp DOT &kp FSLH
+                            /* 左親指（2キー） */        /* 右親指（2キー） */
+                            &kp LALT &kp SPACE             &kp RET &kp BSPC
+            >;
+        };
+    };
+};
