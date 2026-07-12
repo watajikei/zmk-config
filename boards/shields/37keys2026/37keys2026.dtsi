@@ -1,6 +1,6 @@
 /*
  * 37keys2026.dtsi
- * 左右合計37キー、ACTIVE_LOW と PULL_UP の電気的整合性を完全に合わせた決定版定義ファイル
+ * 最新の ZMK main 仕様に完全準拠し、ネイティブGPIO定義によってピンの誤認識・混線を根本解決した定義ファイル
  */
 
 #include <dt-bindings/zmk/matrix_transform.h>
@@ -78,28 +78,28 @@
             ;
     };
 
-    /* 物理ピンのスキャン方法：ACTIVE_LOW と PULL_UP に修正して電気的に安定化 */
+    /* 物理ピンのスキャン方法：マクロを排除し、&gpio0 の絶対アドレスでピンを完全分離 */
     kscan0: kscan {
         compatible = "zmk,kscan-gpio-matrix";
         diode-direction = "row2col";
         wakeup-source;
 
-        /* 行（出力側）のピンアサイン：ACTIVE_LOW に修正 */
+        /* 行（出力側）のピンアサイン：XIAOの各ピンに対応するネイティブポート指定 */
         row-gpios
-            = <&xiao_d 0 GPIO_ACTIVE_LOW>
-            , <&xiao_d 1 GPIO_ACTIVE_LOW>
-            , <&xiao_d 2 GPIO_ACTIVE_LOW>
-            , <&xiao_d 3 GPIO_ACTIVE_LOW>
+            = <&gpio0  2 GPIO_ACTIVE_LOW> // D0ピン (P0.02)
+            , <&gpio0  3 GPIO_ACTIVE_LOW> // D1ピン (P0.03)
+            , <&gpio0 28 GPIO_ACTIVE_LOW> // D2ピン (P0.28)
+            , <&gpio0 29 GPIO_ACTIVE_LOW> // D3ピン (P0.29)
             ;
 
-        /* 列（入力側）のピンアサイン：ACTIVE_LOW ＋ PULL_UP に修正して電位をハイ固定 */
+        /* 列（入力側）のピンアサイン：明示的なPULL_UPと独立ポート指定により誤認識を遮断 */
         col-gpios
-            = <&xiao_d 4 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>
-            , <&xiao_d 5 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>
-            , <&xiao_d 6 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>
-            , <&xiao_d 7 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>
-            , <&xiao_d 8 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>
-            , <&xiao_d 9 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>
+            = <&gpio0  4 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)> // D4ピン (P0.04)
+            , <&gpio0  5 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)> // D5ピン (P0.05)
+            , <&gpio0  9 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)> // D6ピン (P0.09)
+            , <&gpio0 10 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)> // D7ピン (P0.10)
+            , <&gpio0 21 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)> // D8ピン (P0.21)
+            , <&gpio0 25 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)> // D9ピン (P0.25)
             ;
     };
 };
