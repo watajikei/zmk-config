@@ -1,6 +1,6 @@
 /*
  * 37keys2026.dtsi
- * 最新の ZMK main 仕様に完全準拠し、ネイティブGPIO定義によってピンの誤認識・混線を根本解決した定義ファイル
+ * マクロ定義への回帰と、USB-CDCスニペットとの完全な共存を果たす決定版定義ファイル
  */
 
 #include <dt-bindings/zmk/matrix_transform.h>
@@ -14,7 +14,7 @@
     /* 物理配列（左20キー、右17キー）とキーマップを紐解くマトリックス定義 */
     default_transform: matrix_transform {
         compatible = "zmk,matrix-transform";
-        columns = <12>; // 左右全体の最大列数 (左6列 + 右6列のオフセット)
+        columns = <12>; // 左右全体の最大列数
         rows = <4>;     // 行数 (D0〜D3の計4行)
 
         map = <
@@ -35,71 +35,71 @@
 
         /* 左右合計37キーの物理座標（1キーあたり幅100×高さ100） */
         keys
-            = <&key_physical_attrs 100 100    0    0 0 0 0> // 1行目・左手6キー
+            = <&key_physical_attrs 100 100    0    0 0 0 0>
             , <&key_physical_attrs 100 100  100    0 0 0 0>
             , <&key_physical_attrs 100 100  200    0 0 0 0>
             , <&key_physical_attrs 100 100  300    0 0 0 0>
             , <&key_physical_attrs 100 100  400    0 0 0 0>
             , <&key_physical_attrs 100 100  500    0 0 0 0>
-            , <&key_physical_attrs 100 100  700    0 0 0 0> // 1行目・右手5キー
+            , <&key_physical_attrs 100 100  700    0 0 0 0>
             , <&key_physical_attrs 100 100  800    0 0 0 0>
             , <&key_physical_attrs 100 100  900    0 0 0 0>
             , <&key_physical_attrs 100 100 1000    0 0 0 0>
             , <&key_physical_attrs 100 100 1100    0 0 0 0>
 
-            , <&key_physical_attrs 100 100    0  100 0 0 0> // 2行目・左手6キー
+            , <&key_physical_attrs 100 100    0  100 0 0 0>
             , <&key_physical_attrs 100 100  100  100 0 0 0>
             , <&key_physical_attrs 100 100  200  100 0 0 0>
             , <&key_physical_attrs 100 100  300  100 0 0 0>
             , <&key_physical_attrs 100 100  400  100 0 0 0>
             , <&key_physical_attrs 100 100  500  100 0 0 0>
-            , <&key_physical_attrs 100 100  700  100 0 0 0> // 2行目・右手5キー
+            , <&key_physical_attrs 100 100  700  100 0 0 0>
             , <&key_physical_attrs 100 100  800  100 0 0 0>
             , <&key_physical_attrs 100 100  900  100 0 0 0>
             , <&key_physical_attrs 100 100 1000  100 0 0 0>
             , <&key_physical_attrs 100 100 1100  100 0 0 0>
 
-            , <&key_physical_attrs 100 100    0  200 0 0 0> // 3行目・左手6キー
+            , <&key_physical_attrs 100 100    0  200 0 0 0>
             , <&key_physical_attrs 100 100  100  200 0 0 0>
             , <&key_physical_attrs 100 100  200  200 0 0 0>
             , <&key_physical_attrs 100 100  300  200 0 0 0>
             , <&key_physical_attrs 100 100  400  200 0 0 0>
             , <&key_physical_attrs 100 100  500  200 0 0 0>
-            , <&key_physical_attrs 100 100  700  200 0 0 0> // 3行目・右手5キー
+            , <&key_physical_attrs 100 100  700  200 0 0 0>
             , <&key_physical_attrs 100 100  800  200 0 0 0>
             , <&key_physical_attrs 100 100  900  200 0 0 0>
             , <&key_physical_attrs 100 100 1000  200 0 0 0>
             , <&key_physical_attrs 100 100 1100  200 0 0 0>
 
-            , <&key_physical_attrs 100 100  400  300 0 0 0> // 親指行・左手2キー
+            , <&key_physical_attrs 100 100  400  300 0 0 0>
             , <&key_physical_attrs 100 100  500  300 0 0 0>
-            , <&key_physical_attrs 100 100  700  300 0 0 0> // 親指行・右手2キー
+            , <&key_physical_attrs 100 100  700  300 0 0 0>
             , <&key_physical_attrs 100 100  800  300 0 0 0>
             ;
     };
 
-    /* 物理ピンのスキャン方法：マクロを排除し、&gpio0 の絶対アドレスでピンを完全分離 */
+    /* 物理ピンのスキャン方法：確実な &xiao_d マクロ表現に統合 */
     kscan0: kscan {
         compatible = "zmk,kscan-gpio-matrix";
         diode-direction = "row2col";
         wakeup-source;
 
-        /* 行（出力側）のピンアサイン：XIAOの各ピンに対応するネイティブポート指定 */
+        /* 行（出力側）のピンアサイン：シルク印刷のD0〜D3に完全一致 */
         row-gpios
-            = <&gpio0  2 GPIO_ACTIVE_LOW> // D0ピン (P0.02)
-            , <&gpio0  3 GPIO_ACTIVE_LOW> // D1ピン (P0.03)
-            , <&gpio0 28 GPIO_ACTIVE_LOW> // D2ピン (P0.28)
-            , <&gpio0 29 GPIO_ACTIVE_LOW> // D3ピン (P0.29)
+            = <&xiao_d 0 GPIO_ACTIVE_LOW>
+            , <&xiao_d 1 GPIO_ACTIVE_LOW>
+            , <&xiao_d 2 GPIO_ACTIVE_LOW>
+            , <&xiao_d 3 GPIO_ACTIVE_LOW>
             ;
 
-        /* 列（入力側）のピンアサイン：明示的なPULL_UPと独立ポート指定により誤認識を遮断 */
+        /* 列（入力側）のピンアサイン：シルク印刷のD4〜D9に完全一致 */
         col-gpios
-            = <&gpio0  4 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)> // D4ピン (P0.04)
-            , <&gpio0  5 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)> // D5ピン (P0.05)
-            , <&gpio0  9 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)> // D6ピン (P0.09)
-            , <&gpio0 10 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)> // D7ピン (P0.10)
-            , <&gpio0 21 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)> // D8ピン (P0.21)
-            , <&gpio0 25 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)> // D9ピン (P0.25)
+            = <&xiao_d 4 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>
+            , <&xiao_d 5 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>
+            , <&xiao_d 6 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>
+            , <&xiao_d 7 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>
+            , <&xiao_d 8 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>
+            , <&xiao_d 9 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>
             ;
     };
 };
