@@ -1,15 +1,19 @@
 /*
  * 37keys2026.dtsi
- * アナログ入力およびPWMの競合を徹底排除し、D6ピンの制御権をGPIOに完全解放する定義
+ * PDMマイクドライバおよび全PWMを完全停止し、D6ピンをGPIOとして完全解放する定義
  */
 
 #include <dt-bindings/zmk/matrix_transform.h>
 #include <physical_layouts.dtsi>
 
-/* ★D8,D9を解放したSPI1に加え、D6(P0.09)を二重占有している可能性が高いADCとPWMを強制停止 */
+/* ★D8/D9を解放したSPI1に加え、D6をクロック出力として占有しているPDMドライバと全PWMを強制停止 */
 &spi1 { status = "disabled"; };
 &adc  { status = "disabled"; };
+&pdm0 { status = "disabled"; };
 &pwm0 { status = "disabled"; };
+&pwm1 { status = "disabled"; };
+&pwm2 { status = "disabled"; };
+&pwm3 { status = "disabled"; };
 
 / {
     chosen {
@@ -19,8 +23,8 @@
     /* 物理配列（左20キー、右17キー）とキーマップを紐解くマトリックス定義 */
     default_transform: matrix_transform {
         compatible = "zmk,matrix-transform";
-        columns = <12>; // 左右全体の最大列数 (左6列 + 右6列のオフセット)
-        rows = <4>;     // 行数 (D0〜D3の計4行)
+        columns = <12>;
+        rows = <4>;
 
         map = <
             /* ----------- 左手側 (20キー) ----------- */     /* ------- 右手側 (17キー) ------- */
@@ -83,7 +87,7 @@
             ;
     };
 
-    /* 物理ピンのスキャン方法：ACTIVE_LOW と PULL_UP */
+    /* 物理ピンのスキャン方法 */
     kscan0: kscan {
         compatible = "zmk,kscan-gpio-matrix";
         diode-direction = "row2col";
