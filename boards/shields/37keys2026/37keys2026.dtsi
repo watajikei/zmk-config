@@ -1,9 +1,10 @@
 /*
  * 37keys2026.dtsi
- * 最新の ZMK main 構文（アングルブラケットによるノード参照・mapプロパティ・PULL_DOWNフラグ）に完全準拠した定義ファイル
+ * 最新の ZMK main 仕様（keys位置属性・mapプロパティ・PULL_DOWNフラグ）に完全準拠した定義ファイル
  */
 
 #include <dt-bindings/zmk/matrix_transform.h>
+#include <physical_layouts.dtsi> /* ★ZMK Studio のキー配置定義に必要なヘッダーをインクルード */
 
 / {
     chosen {
@@ -27,12 +28,56 @@
         >;
     };
 
-    /* 最新の Zephyr 構文ルールに基づき、参照ポインタを < > で囲んで定義 */
+    /* ★ZMK Studio の安全アサーションを通過させ、画面上にグリッド表示するための物理レイアウト定義 */
     default_layout: default_layout {
         compatible = "zmk,physical-layout";
         display-name = "Default Layout";
-        transform = <&default_transform>; /* ★最新の配列構文形式へ修正 */
-        kscan = <&kscan0>;               /* ★同様に配列構文形式へ修正 */
+        transform = <&default_transform>;
+        kscan = <&kscan0>;
+
+        /* 左右合計37キーの物理座標（1キーあたり幅100×高さ100、左右の間に少し隙間を配置） */
+        keys
+            = <&key_physical_attrs 100 100    0    0 0 0 0> // 1行目・左手6キー
+            , <&key_physical_attrs 100 100  100    0 0 0 0>
+            , <&key_physical_attrs 100 100  200    0 0 0 0>
+            , <&key_physical_attrs 100 100  300    0 0 0 0>
+            , <&key_physical_attrs 100 100  400    0 0 0 0>
+            , <&key_physical_attrs 100 100  500    0 0 0 0>
+            , <&key_physical_attrs 100 100  700    0 0 0 0> // 1行目・右手5キー
+            , <&key_physical_attrs 100 100  800    0 0 0 0>
+            , <&key_physical_attrs 100 100  900    0 0 0 0>
+            , <&key_physical_attrs 100 100 1000    0 0 0 0>
+            , <&key_physical_attrs 100 100 1100    0 0 0 0>
+
+            , <&key_physical_attrs 100 100    0  100 0 0 0> // 2行目・左手6キー
+            , <&key_physical_attrs 100 100  100  100 0 0 0>
+            , <&key_physical_attrs 100 100  200  100 0 0 0>
+            , <&key_physical_attrs 100 100  300  100 0 0 0>
+            , <&key_physical_attrs 100 100  400  100 0 0 0>
+            , <&key_physical_attrs 100 100  500  100 0 0 0>
+            , <&key_physical_attrs 100 100  700  100 0 0 0> // 2行目・右手5キー
+            , <&key_physical_attrs 100 100  800  100 0 0 0>
+            , <&key_physical_attrs 100 100  900  100 0 0 0>
+            , <&key_physical_attrs 100 100 1000  100 0 0 0>
+            , <&key_physical_attrs 100 100 1100  100 0 0 0>
+
+            , <&key_physical_attrs 100 100    0  200 0 0 0> // 3行目・左手6キー
+            , <&key_physical_attrs 100 100  100  200 0 0 0>
+            , <&key_physical_attrs 100 100  200  200 0 0 0>
+            , <&key_physical_attrs 100 100  300  200 0 0 0>
+            , <&key_physical_attrs 100 100  400  200 0 0 0>
+            , <&key_physical_attrs 100 100  500  200 0 0 0>
+            , <&key_physical_attrs 100 100  700  200 0 0 0> // 3行目・右手5キー
+            , <&key_physical_attrs 100 100  800  200 0 0 0>
+            , <&key_physical_attrs 100 100  900  200 0 0 0>
+            , <&key_physical_attrs 100 100 1000  200 0 0 0>
+            , <&key_physical_attrs 100 100 1100  200 0 0 0>
+
+            , <&key_physical_attrs 100 100  400  300 0 0 0> // 親指行・左手2キー
+            , <&key_physical_attrs 100 100  500  300 0 0 0>
+            , <&key_physical_attrs 100 100  700  300 0 0 0> // 親指行・右手2キー
+            , <&key_physical_attrs 100 100  800  300 0 0 0>
+            ;
     };
 
     /* 物理的なピンのスキャン方法の設定 */
