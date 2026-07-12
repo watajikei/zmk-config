@@ -1,20 +1,23 @@
 /*
  * 37keys2026.dtsi
- * I2Cバスリカバリーの拘束を解除し、D6ピンの完全なGPIO化を果たす定義ファイル
+ * すべての不要な周辺ペリフェラルを完全網羅して停止し、D6ピンの解放を試みる定義ファイル
  */
 
 #include <dt-bindings/zmk/matrix_transform.h>
 #include <physical_layouts.dtsi>
 
-/* ★D8/D9を解放したSPI1等に加え、D6をSDA出力駆動として占有しているI2C0を完全に停止 */
-&spi1 { status = "disabled"; };
-&adc  { status = "disabled"; };
-&pdm0 { status = "disabled"; };
-&pwm0 { status = "disabled"; };
-&pwm1 { status = "disabled"; };
-&pwm2 { status = "disabled"; };
-&pwm3 { status = "disabled"; };
-&i2c0 { status = "disabled"; };
+/* ★XIAO BLEに存在する主要な通信機能をすべて停止し、D4〜D9の全ピンの占有を完全に解く */
+&spi0  { status = "disabled"; };
+&spi1  { status = "disabled"; };
+&i2c0  { status = "disabled"; };
+&i2c1  { status = "disabled"; };
+&uart1 { status = "disabled"; };
+&adc   { status = "disabled"; };
+&pdm0  { status = "disabled"; };
+&pwm0  { status = "disabled"; };
+&pwm1  { status = "disabled"; };
+&pwm2  { status = "disabled"; };
+&pwm3  { status = "disabled"; };
 
 / {
     chosen {
@@ -24,14 +27,14 @@
     /* 物理配列（左20キー、右17キー）とキーマップを紐解くマトリックス定義 */
     default_transform: matrix_transform {
         compatible = "zmk,matrix-transform";
-        columns = <12>; // 左右全体の最大列数 (左6列 + 右6列のオフセット)
-        rows = <4>;     // 行数 (D0〜D3の計4行)
+        columns = <12>;
+        rows = <4>;
 
         map = <
             /* ----------- 左手側 (20キー) ----------- */     /* ------- 右手側 (17キー) ------- */
             RC(0,0) RC(0,1) RC(0,2) RC(0,3) RC(0,4) RC(0,5)     RC(0,6) RC(0,7) RC(0,8) RC(0,9) RC(0,10)
             RC(1,0) RC(1,1) RC(1,2) RC(1,3) RC(1,4) RC(1,5)     RC(1,6) RC(1,7) RC(1,8) RC(1,9) RC(1,10)
-            RC(2,0) RC(2,1) RC(2,2) RC(2,3) RC(2,4) RC(2,5)     RC(2,6) RC(2,7) RC(2,8) RC(2,9) RC(2,10)
+            RC(2,0) RC(2,1) RC(2,2) CC(2,3) RC(2,4) RC(2,5)     RC(2,6) RC(2,7) RC(2,8) RC(2,9) RC(2,10)
                                             RC(3,4) RC(3,5)     RC(3,6) RC(3,7)
         >;
     };
@@ -88,7 +91,7 @@
             ;
     };
 
-    /* 物理ピンのスキャン方法 */
+    /* 物理ピンのスキャン方法：ACTIVE_LOW と PULL_UP */
     kscan0: kscan {
         compatible = "zmk,kscan-gpio-matrix";
         diode-direction = "row2col";
