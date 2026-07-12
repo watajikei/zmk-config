@@ -1,6 +1,6 @@
 /*
  * 37keys2026.dtsi
- * 最新の ZMK main 仕様（chosenクリーンアップ・keys位置属性・mapプロパティ・PULL_DOWNフラグ）に完全準拠した定義ファイル
+ * 左右合計37キー、ACTIVE_LOW と PULL_UP の電気的整合性を完全に合わせた決定版定義ファイル
  */
 
 #include <dt-bindings/zmk/matrix_transform.h>
@@ -8,7 +8,6 @@
 
 / {
     chosen {
-        /* ★最新仕様に基づき、競合の原因となっていた旧来の matrix-transform や kscan の行を削除しました */
         zmk,physical-layout = &default_layout;
     };
 
@@ -27,14 +26,14 @@
         >;
     };
 
-    /* ZMK Studio の安全アサーションを通過させ、画面上にグリッド表示するための物理レイアウト定義 */
+    /* ZMK Studio 画面表示用の物理レイアウト定義 */
     default_layout: default_layout {
         compatible = "zmk,physical-layout";
         display-name = "Default Layout";
         transform = <&default_transform>;
         kscan = <&kscan0>;
 
-        /* 左右合計37キーの物理座標（1キーあたり幅100×高さ100、左右の間に少し隙間を配置） */
+        /* 左右合計37キーの物理座標（1キーあたり幅100×高さ100） */
         keys
             = <&key_physical_attrs 100 100    0    0 0 0 0> // 1行目・左手6キー
             , <&key_physical_attrs 100 100  100    0 0 0 0>
@@ -79,28 +78,28 @@
             ;
     };
 
-    /* 物理的なピンのスキャン方法の設定 */
+    /* 物理ピンのスキャン方法：ACTIVE_LOW と PULL_UP に修正して電気的に安定化 */
     kscan0: kscan {
         compatible = "zmk,kscan-gpio-matrix";
         diode-direction = "row2col";
         wakeup-source;
 
-        /* 行（出力側）のピンアサイン：D0〜D3 */
+        /* 行（出力側）のピンアサイン：ACTIVE_LOW に修正 */
         row-gpios
-            = <&xiao_d 0 GPIO_ACTIVE_HIGH>
-            , <&xiao_d 1 GPIO_ACTIVE_HIGH>
-            , <&xiao_d 2 GPIO_ACTIVE_HIGH>
-            , <&xiao_d 3 GPIO_ACTIVE_HIGH>
+            = <&xiao_d 0 GPIO_ACTIVE_LOW>
+            , <&xiao_d 1 GPIO_ACTIVE_LOW>
+            , <&xiao_d 2 GPIO_ACTIVE_LOW>
+            , <&xiao_d 3 GPIO_ACTIVE_LOW>
             ;
 
-        /* 列（入力側）のピンアサイン：D4〜D9。PULL_DOWNを明示して電位の浮遊（混線）を完全に防止 */
+        /* 列（入力側）のピンアサイン：ACTIVE_LOW ＋ PULL_UP に修正して電位をハイ固定 */
         col-gpios
-            = <&xiao_d 4 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
-            , <&xiao_d 5 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
-            , <&xiao_d 6 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
-            , <&xiao_d 7 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
-            , <&xiao_d 8 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
-            , <&xiao_d 9 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
+            = <&xiao_d 4 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>
+            , <&xiao_d 5 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>
+            , <&xiao_d 6 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>
+            , <&xiao_d 7 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>
+            , <&xiao_d 8 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>
+            , <&xiao_d 9 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>
             ;
     };
 };
