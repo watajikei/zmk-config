@@ -1,23 +1,10 @@
 /*
  * 37keys2026.dtsi
- * マクロを排除し、絶対ピンアドレス(&gpio0)によってD6のマッピングバグを強制突破する定義
+ * 正しいポート1のアドレスマッピングを適用し、D6ピンの完全動作を果たす定義ファイル
  */
 
 #include <dt-bindings/zmk/matrix_transform.h>
 #include <physical_layouts.dtsi>
-
-/* XIAO BLEに存在する主要な通信機能をすべて停止し、ピンの占有を完全に解く */
-&spi0  { status = "disabled"; };
-&spi1  { status = "disabled"; };
-&i2c0  { status = "disabled"; };
-&i2c1  { status = "disabled"; };
-&uart1 { status = "disabled"; };
-&adc   { status = "disabled"; };
-&pdm0  { status = "disabled"; };
-&pwm0  { status = "disabled"; };
-&pwm1  { status = "disabled"; };
-&pwm2  { status = "disabled"; };
-&pwm3  { status = "disabled"; };
 
 / {
     chosen {
@@ -91,13 +78,13 @@
             ;
     };
 
-    /* 物理ピンスキャン：マクロの翻訳バグを排し、&gpio0 の絶対アドレスに完全書き換え */
+    /* 物理ピンスキャン：XIAOの公式ハードウェア仕様に準拠した生ピン指定 */
     kscan0: kscan {
         compatible = "zmk,kscan-gpio-matrix";
         diode-direction = "row2col";
         wakeup-source;
 
-        /* 行ピン（出力側）：XIAOのD0〜D3に対応する絶対ピン番号 */
+        /* 行ピン（出力側）：ポート0のピン群 */
         row-gpios
             = <&gpio0  2 GPIO_ACTIVE_LOW> // D0 (P0.02)
             , <&gpio0  3 GPIO_ACTIVE_LOW> // D1 (P0.03)
@@ -105,14 +92,14 @@
             , <&gpio0 29 GPIO_ACTIVE_LOW> // D3 (P0.29)
             ;
 
-        /* 列ピン（入力側）：XIAOのD4〜D9に対応する絶対ピン番号＋プルアップ */
+        /* 列ピン（入力側）：D6以降はポート1(&gpio1)のマッピングへ正確に修正 */
         col-gpios
             = <&gpio0  4 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)> // D4 (P0.04)
             , <&gpio0  5 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)> // D5 (P0.05)
-            , <&gpio0  9 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)> // D6 (P0.09) ★ダイレクト指定
-            , <&gpio0 10 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)> // D7 (P0.10)
-            , <&gpio0 21 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)> // D8 (P0.21)
-            , <&gpio0 25 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)> // D9 (P0.25)
+            , <&gpio1 11 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)> // D6 (P1.11) ★修正：これが真のD6生ピン
+            , <&gpio1 12 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)> // D7 (P1.12) ★修正：これが真のD7生ピン
+            , <&gpio1 13 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)> // D8 (P1.13) ★修正：これが真のD8生ピン
+            , <&gpio1 14 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)> // D9 (P1.14) ★修正：これが真のD9生ピン
             ;
     };
 };
