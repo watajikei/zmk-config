@@ -1,16 +1,10 @@
 /*
  * 37keys2026.dtsi
- * スニペットとの競合を排除し、全ピンをマトリックスとして正常動作させる定義ファイル
+ * システムのフリーズを解除し、絶対アドレス指定とPULL_UPによって混線を根本解決する定義
  */
 
 #include <dt-bindings/zmk/matrix_transform.h>
 #include <physical_layouts.dtsi>
-
-/* マイコン内部の物理通信ポートを停止し、D4, D5, D8, D9 ピンの占有を確実に防ぐ */
-&uart0 { status = "disabled"; };
-&i2c0  { status = "disabled"; };
-&spi0  { status = "disabled"; };
-&spi1  { status = "disabled"; };
 
 / {
     chosen {
@@ -20,8 +14,8 @@
     /* 物理配列（左20キー、右17キー）とキーマップを紐解くマトリックス定義 */
     default_transform: matrix_transform {
         compatible = "zmk,matrix-transform";
-        columns = <12>;
-        rows = <4>;
+        columns = <12>; // 左右全体の最大列数
+        rows = <4>;     // 行数 (D0〜D3の計4行)
 
         map = <
             /* ----------- 左手側 (20キー) ----------- */     /* ------- 右手側 (17キー) ------- */
@@ -84,26 +78,28 @@
             ;
     };
 
-    /* 物理ピンのスキャン方法：ACTIVE_LOW と PULL_UP で回路を安定化 */
+    /* ハードウェア生ピンアドレス(&gpio0)をダイレクトに叩き、電気的特性を完全に制御する */
     kscan0: kscan {
         compatible = "zmk,kscan-gpio-matrix";
         diode-direction = "row2col";
         wakeup-source;
 
+        /* 行（出力側）のピンアサイン：XIAOのD0〜D3をネイティブポート指定 */
         row-gpios
-            = <&xiao_d 0 GPIO_ACTIVE_LOW>
-            , <&xiao_d 1 GPIO_ACTIVE_LOW>
-            , <&xiao_d 2 GPIO_ACTIVE_LOW>
-            , <&xiao_d 3 GPIO_ACTIVE_LOW>
+            = <&gpio0  2 GPIO_ACTIVE_LOW> // D0ピン (P0.02)
+            , <&gpio0  3 GPIO_ACTIVE_LOW> // D1ピン (P0.03)
+            , <&gpio0 28 GPIO_ACTIVE_LOW> // D2ピン (P0.28)
+            , <&gpio0 29 GPIO_ACTIVE_LOW> // D3ピン (P0.29)
             ;
 
+        /* 列（入力側）のピンアサイン：D4〜D9に強固な内部プルアップを物理適用 */
         col-gpios
-            = <&xiao_d 4 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>
-            , <&xiao_d 5 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>
-            , <&xiao_d 6 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>
-            , <&xiao_d 7 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>
-            , <&xiao_d 8 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>
-            , <&xiao_d 9 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>
+            = <&gpio0  4 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)> // D4ピン (P0.04)
+            , <&gpio0  5 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)> // D5ピン (P0.05)
+            , <&gpio0  9 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)> // D6ピン (P0.09)
+            , <&gpio0 10 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)> // D7ピン (P0.10)
+            , <&gpio0 21 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)> // D8ピン (P0.21)
+            , <&gpio0 25 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)> // D9ピン (P0.25)
             ;
     };
 };
