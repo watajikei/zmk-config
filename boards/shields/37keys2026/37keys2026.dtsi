@@ -1,12 +1,12 @@
 /*
  * 37keys2026.dtsi
- * 周辺通信機能を完全無効化し、全ピンをGPIOとして完全解放した最新ZMK main準拠の定義ファイル
+ * スニペットとの競合を排除し、全ピンをマトリックスとして正常動作させる定義ファイル
  */
 
 #include <dt-bindings/zmk/matrix_transform.h>
 #include <physical_layouts.dtsi>
 
-/* ★マイコン内部の通信機能を明示的に停止し、D4, D5, D8, D9 などのピン占有を解除する */
+/* マイコン内部の物理通信ポートを停止し、D4, D5, D8, D9 ピンの占有を確実に防ぐ */
 &uart0 { status = "disabled"; };
 &i2c0  { status = "disabled"; };
 &spi0  { status = "disabled"; };
@@ -20,8 +20,8 @@
     /* 物理配列（左20キー、右17キー）とキーマップを紐解くマトリックス定義 */
     default_transform: matrix_transform {
         compatible = "zmk,matrix-transform";
-        columns = <12>; // 左右全体の最大列数 (左6列 + 右6列のオフセット)
-        rows = <4>;     // 行数 (D0〜D3の計4行)
+        columns = <12>;
+        rows = <4>;
 
         map = <
             /* ----------- 左手側 (20キー) ----------- */     /* ------- 右手側 (17キー) ------- */
@@ -84,13 +84,12 @@
             ;
     };
 
-    /* 物理ピンのスキャン方法：予約解除された安全なマクロ表現でスキャン */
+    /* 物理ピンのスキャン方法：ACTIVE_LOW と PULL_UP で回路を安定化 */
     kscan0: kscan {
         compatible = "zmk,kscan-gpio-matrix";
         diode-direction = "row2col";
         wakeup-source;
 
-        /* 行（出力側）のピンアサイン：D0〜D3 */
         row-gpios
             = <&xiao_d 0 GPIO_ACTIVE_LOW>
             , <&xiao_d 1 GPIO_ACTIVE_LOW>
@@ -98,7 +97,6 @@
             , <&xiao_d 3 GPIO_ACTIVE_LOW>
             ;
 
-        /* 列（入力側）のピンアサイン：占有が解除されたD4〜D9にPULL_UPを適用 */
         col-gpios
             = <&xiao_d 4 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>
             , <&xiao_d 5 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>

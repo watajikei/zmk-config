@@ -1,8 +1,6 @@
 include:
   - board: xiao_ble
     shield: 37keys2026_left
-    snippet: studio-rpc-usb-cdc  # ★uart から cdc に変更します
 
   - board: xiao_ble
     shield: 37keys2026_right
-    snippet: studio-rpc-usb-cdc  # ★uart から cdc に変更します
