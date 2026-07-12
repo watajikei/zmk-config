@@ -1,15 +1,14 @@
 /*
  * 37keys2026.dtsi
- * 最新の ZMK main 仕様（keys位置属性・mapプロパティ・PULL_DOWNフラグ）に完全準拠した定義ファイル
+ * 最新の ZMK main 仕様（chosenクリーンアップ・keys位置属性・mapプロパティ・PULL_DOWNフラグ）に完全準拠した定義ファイル
  */
 
 #include <dt-bindings/zmk/matrix_transform.h>
-#include <physical_layouts.dtsi> /* ★ZMK Studio のキー配置定義に必要なヘッダーをインクルード */
+#include <physical_layouts.dtsi>
 
 / {
     chosen {
-        zmk,kscan = &kscan0;
-        zmk,matrix-transform = &default_transform;
+        /* ★最新仕様に基づき、競合の原因となっていた旧来の matrix-transform や kscan の行を削除しました */
         zmk,physical-layout = &default_layout;
     };
 
@@ -28,7 +27,7 @@
         >;
     };
 
-    /* ★ZMK Studio の安全アサーションを通過させ、画面上にグリッド表示するための物理レイアウト定義 */
+    /* ZMK Studio の安全アサーションを通過させ、画面上にグリッド表示するための物理レイアウト定義 */
     default_layout: default_layout {
         compatible = "zmk,physical-layout";
         display-name = "Default Layout";
