@@ -1,12 +1,12 @@
 /*
  * 37keys2026.dtsi
- * PDMマイクドライバおよび全PWMを完全停止し、D6ピンをGPIOとして完全解放する定義
+ * I2Cバスリカバリーの拘束を解除し、D6ピンの完全なGPIO化を果たす定義ファイル
  */
 
 #include <dt-bindings/zmk/matrix_transform.h>
 #include <physical_layouts.dtsi>
 
-/* ★D8/D9を解放したSPI1に加え、D6をクロック出力として占有しているPDMドライバと全PWMを強制停止 */
+/* ★D8/D9を解放したSPI1等に加え、D6をSDA出力駆動として占有しているI2C0を完全に停止 */
 &spi1 { status = "disabled"; };
 &adc  { status = "disabled"; };
 &pdm0 { status = "disabled"; };
@@ -14,6 +14,7 @@
 &pwm1 { status = "disabled"; };
 &pwm2 { status = "disabled"; };
 &pwm3 { status = "disabled"; };
+&i2c0 { status = "disabled"; };
 
 / {
     chosen {
@@ -23,8 +24,8 @@
     /* 物理配列（左20キー、右17キー）とキーマップを紐解くマトリックス定義 */
     default_transform: matrix_transform {
         compatible = "zmk,matrix-transform";
-        columns = <12>;
-        rows = <4>;
+        columns = <12>; // 左右全体の最大列数 (左6列 + 右6列のオフセット)
+        rows = <4>;     // 行数 (D0〜D3の計4行)
 
         map = <
             /* ----------- 左手側 (20キー) ----------- */     /* ------- 右手側 (17キー) ------- */
