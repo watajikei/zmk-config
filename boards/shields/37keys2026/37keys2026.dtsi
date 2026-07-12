@@ -1,14 +1,15 @@
 /*
  * 37keys2026.dtsi
- * NFCTドライバを完全に停止し、D6ピンの制御権をキーボードマトリックスに奪還する定義ファイル
+ * アナログ入力およびPWMの競合を徹底排除し、D6ピンの制御権をGPIOに完全解放する定義
  */
 
 #include <dt-bindings/zmk/matrix_transform.h>
 #include <physical_layouts.dtsi>
 
-/* ★D8, D9を縛るSPI1に加え、D6をロックしているNFCドライバ本体を完全に停止する */
+/* ★D8,D9を解放したSPI1に加え、D6(P0.09)を二重占有している可能性が高いADCとPWMを強制停止 */
 &spi1 { status = "disabled"; };
-&nfct { status = "disabled"; };
+&adc  { status = "disabled"; };
+&pwm0 { status = "disabled"; };
 
 / {
     chosen {
