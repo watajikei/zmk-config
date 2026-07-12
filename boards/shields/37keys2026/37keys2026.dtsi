@@ -1,6 +1,6 @@
 /*
  * 37keys2026.dtsi
- * 最新の ZMK main 仕様（物理レイアウト・mapプロパティ・PULL_DOWNフラグ）に完全準拠した共通定義ファイル
+ * 最新の ZMK main 構文（アングルブラケットによるノード参照・mapプロパティ・PULL_DOWNフラグ）に完全準拠した定義ファイル
  */
 
 #include <dt-bindings/zmk/matrix_transform.h>
@@ -9,7 +9,7 @@
     chosen {
         zmk,kscan = &kscan0;
         zmk,matrix-transform = &default_transform;
-        zmk,physical-layout = &default_layout; /* ★最新の ZMK main 仕様で必須となった物理レイアウトを登録 */
+        zmk,physical-layout = &default_layout;
     };
 
     /* 物理配列（左20キー、右17キー）とキーマップを紐解くマトリックス定義 */
@@ -27,12 +27,12 @@
         >;
     };
 
-    /* ★ZMK Studio の安全アサーションを通過させるための物理レイアウト定義 */
+    /* 最新の Zephyr 構文ルールに基づき、参照ポインタを < > で囲んで定義 */
     default_layout: default_layout {
         compatible = "zmk,physical-layout";
         display-name = "Default Layout";
-        transform = &default_transform;
-        kscan = &kscan0;
+        transform = <&default_transform>; /* ★最新の配列構文形式へ修正 */
+        kscan = <&kscan0>;               /* ★同様に配列構文形式へ修正 */
     };
 
     /* 物理的なピンのスキャン方法の設定 */
