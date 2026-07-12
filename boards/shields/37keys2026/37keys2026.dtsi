@@ -1,12 +1,12 @@
 /*
  * 37keys2026.dtsi
- * タイポを修正し、不要な全周辺ペリフェラルを停止してD6ピンの解放を行う定義ファイル
+ * マクロを排除し、絶対ピンアドレス(&gpio0)によってD6のマッピングバグを強制突破する定義
  */
 
 #include <dt-bindings/zmk/matrix_transform.h>
 #include <physical_layouts.dtsi>
 
-/* XIAO BLEに存在する主要な通信機能をすべて停止し、D4〜D9の全ピンの占有を完全に解く */
+/* XIAO BLEに存在する主要な通信機能をすべて停止し、ピンの占有を完全に解く */
 &spi0  { status = "disabled"; };
 &spi1  { status = "disabled"; };
 &i2c0  { status = "disabled"; };
@@ -46,7 +46,7 @@
         transform = <&default_transform>;
         kscan = <&kscan0>;
 
-        /* 左右合計37キーの物理座標（1キーあたり幅100×高さ100） */
+        /* 左右合計37キーの物理座標 */
         keys
             = <&key_physical_attrs 100 100    0    0 0 0 0>
             , <&key_physical_attrs 100 100  100    0 0 0 0>
@@ -91,26 +91,28 @@
             ;
     };
 
-    /* 物理ピンのスキャン方法：ACTIVE_LOW と PULL_UP */
+    /* 物理ピンスキャン：マクロの翻訳バグを排し、&gpio0 の絶対アドレスに完全書き換え */
     kscan0: kscan {
         compatible = "zmk,kscan-gpio-matrix";
         diode-direction = "row2col";
         wakeup-source;
 
+        /* 行ピン（出力側）：XIAOのD0〜D3に対応する絶対ピン番号 */
         row-gpios
-            = <&xiao_d 0 GPIO_ACTIVE_LOW>
-            , <&xiao_d 1 GPIO_ACTIVE_LOW>
-            , <&xiao_d 2 GPIO_ACTIVE_LOW>
-            , <&xiao_d 3 GPIO_ACTIVE_LOW>
+            = <&gpio0  2 GPIO_ACTIVE_LOW> // D0 (P0.02)
+            , <&gpio0  3 GPIO_ACTIVE_LOW> // D1 (P0.03)
+            , <&gpio0 28 GPIO_ACTIVE_LOW> // D2 (P0.28)
+            , <&gpio0 29 GPIO_ACTIVE_LOW> // D3 (P0.29)
             ;
 
+        /* 列ピン（入力側）：XIAOのD4〜D9に対応する絶対ピン番号＋プルアップ */
         col-gpios
-            = <&xiao_d 4 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>
-            , <&xiao_d 5 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>
-            , <&xiao_d 6 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>
-            , <&xiao_d 7 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>
-            , <&xiao_d 8 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>
-            , <&xiao_d 9 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>
+            = <&gpio0  4 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)> // D4 (P0.04)
+            , <&gpio0  5 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)> // D5 (P0.05)
+            , <&gpio0  9 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)> // D6 (P0.09) ★ダイレクト指定
+            , <&gpio0 10 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)> // D7 (P0.10)
+            , <&gpio0 21 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)> // D8 (P0.21)
+            , <&gpio0 25 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)> // D9 (P0.25)
             ;
     };
 };
