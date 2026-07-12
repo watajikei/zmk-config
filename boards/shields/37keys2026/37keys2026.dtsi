@@ -1,6 +1,5 @@
 /*
- * 37keys2026.dtsi
- * 正しいポート1のアドレスマッピングを適用し、D6ピンの完全動作を果たす定義ファイル
+ * 37keys2026.dtsi (ルートA：D10ピン移行・完全クリーン版)
  */
 
 #include <dt-bindings/zmk/matrix_transform.h>
@@ -78,28 +77,28 @@
             ;
     };
 
-    /* 物理ピンスキャン：XIAOの公式ハードウェア仕様に準拠した生ピン指定 */
+    /* 物理ピンスキャン：不要な無効化コードを全削除し、安全な公式マクロ表記で統一 */
     kscan0: kscan {
         compatible = "zmk,kscan-gpio-matrix";
         diode-direction = "row2col";
         wakeup-source;
 
-        /* 行ピン（出力側）：ポート0のピン群 */
+        /* 行ピン（出力側）：D0〜D3 */
         row-gpios
-            = <&gpio0  2 GPIO_ACTIVE_LOW> // D0 (P0.02)
-            , <&gpio0  3 GPIO_ACTIVE_LOW> // D1 (P0.03)
-            , <&gpio0 28 GPIO_ACTIVE_LOW> // D2 (P0.28)
-            , <&gpio0 29 GPIO_ACTIVE_LOW> // D3 (P0.29)
+            = <&xiao_d 0 GPIO_ACTIVE_LOW>
+            , <&xiao_d 1 GPIO_ACTIVE_LOW>
+            , <&xiao_d 2 GPIO_ACTIVE_LOW>
+            , <&xiao_d 3 GPIO_ACTIVE_LOW>
             ;
 
-        /* 列ピン（入力側）：D6以降はポート1(&gpio1)のマッピングへ正確に修正 */
+        /* 列ピン（入力側）：3番目を競合するD6からD10(&xiao_d 10)へクリーンに移行 */
         col-gpios
-            = <&gpio0  4 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)> // D4 (P0.04)
-            , <&gpio0  5 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)> // D5 (P0.05)
-            , <&gpio1 11 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)> // D6 (P1.11) ★修正：これが真のD6生ピン
-            , <&gpio1 12 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)> // D7 (P1.12) ★修正：これが真のD7生ピン
-            , <&gpio1 13 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)> // D8 (P1.13) ★修正：これが真のD8生ピン
-            , <&gpio1 14 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)> // D9 (P1.14) ★修正：これが真のD9生ピン
+            = <&xiao_d 4 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)> // D4
+            , <&xiao_d 5 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)> // D5
+            , <&xiao_d 10 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)> // ★D6の代わりにD10ピンをスキャン
+            , <&xiao_d 7 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)> // D7
+            , <&xiao_d 8 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)> // D8
+            , <&xiao_d 9 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)> // D9
             ;
     };
 };
