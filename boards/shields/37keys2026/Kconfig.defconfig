@@ -2,6 +2,7 @@
 if SHIELD_37KEYS2026_LEFT || SHIELD_37KEYS2026_RIGHT
 
 config ZMK_BOARD
+    string
     default "xiao_ble"
 
 config ZMK_SPLIT
@@ -9,7 +10,7 @@ config ZMK_SPLIT
 
 endif
 
-# 左手側（LEFT）だけに「お前がPCと通信するリーダー（Central）だ」と役割を叩き込む
+# 左手側（LEFT）の設定：PCと通信するリーダー（Central）
 if SHIELD_37KEYS2026_LEFT
 
 config ZMK_KEYBOARD_NAME
@@ -20,7 +21,7 @@ config ZMK_SPLIT_ROLE_CENTRAL
 
 endif
 
-# 右手側（RIGHT）の設定
+# 右手側（RIGHT）の設定：ペリフェラル
 if SHIELD_37KEYS2026_RIGHT
 
 config ZMK_KEYBOARD_NAME
