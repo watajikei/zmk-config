@@ -1,0 +1,29 @@
+# 37keys2026の共通デフォルト設定
+if SHIELD_37KEYS2026_LEFT || SHIELD_37KEYS2026_RIGHT
+
+config ZMK_BOARD
+    default "xiao_ble"
+
+config ZMK_SPLIT
+    default y
+
+endif
+
+# 左手側（LEFT）だけに「お前がPCと通信するリーダー（Central）だ」と役割を叩き込む
+if SHIELD_37KEYS2026_LEFT
+
+config ZMK_KEYBOARD_NAME
+    default "37keys2026"
+
+config ZMK_SPLIT_ROLE_CENTRAL
+    default y
+
+endif
+
+# 右手側（RIGHT）の設定
+if SHIELD_37KEYS2026_RIGHT
+
+config ZMK_KEYBOARD_NAME
+    default "37keys2026_R"
+
+endif
