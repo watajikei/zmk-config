@@ -10,7 +10,7 @@ config ZMK_SPLIT
 
 endif
 
-# 左手側（LEFT）の設定：PCと通信するリーダー（Central）
+# 左手側（LEFT）を明確にPCと通信する親機（Central）として定義
 if SHIELD_37KEYS2026_LEFT
 
 config ZMK_KEYBOARD_NAME
@@ -21,7 +21,7 @@ config ZMK_SPLIT_ROLE_CENTRAL
 
 endif
 
-# 右手側（RIGHT）の設定：ペリフェラル
+# 右手側（RIGHT）の設定
 if SHIELD_37KEYS2026_RIGHT
 
 config ZMK_KEYBOARD_NAME
