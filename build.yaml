@@ -1,3 +1,2 @@
-targets:
-  - board: xiao_ble
-    shield: 1key
+board: [xiao_ble]
+shield: [1key]
