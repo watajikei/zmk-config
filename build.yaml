@@ -1,2 +1,5 @@
-board: [xiao_ble]
-shield: [1key]
+include:
+  - board: xiao_ble
+    shield: 1key
+    cmake-args: "-DBOARD_QUALIFIERS=zmk"
+    artifact-name: 1key_xiao_ble
