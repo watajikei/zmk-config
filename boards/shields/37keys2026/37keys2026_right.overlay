@@ -1,18 +1,24 @@
 #include "37keys2026.dtsi"
 
+&default_transform {
+    col-offset = <6>; // 右手は6列目からスタート
+};
+
 &kscan0 {
+    // 行（4本）：左手と同じピンを使うのが配線上もっとも直感的です
+    row-gpios
+        = <&xiao_d 0 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
+        , <&xiao_d 1 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
+        , <&xiao_d 2 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
+        , <&xiao_d 3 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
+        ;
+
+    // 列（5本）：D4, D5, D7, D8, D9 （D10は余り）
     col-gpios
-        = <&gpio0  0 GPIO_ACTIVE_LOW> // 左手側 Col 0 ダミー
-        , <&gpio0  0 GPIO_ACTIVE_LOW> // 左手側 Col 1 ダミー
-        , <&gpio0  0 GPIO_ACTIVE_LOW> // 左手側 Col 2 ダミー
-        , <&gpio0  0 GPIO_ACTIVE_LOW> // 左手側 Col 3 ダミー
-        , <&gpio0  0 GPIO_ACTIVE_LOW> // 左手側 Col 4 ダミー
-        , <&gpio0  0 GPIO_ACTIVE_LOW> // 左手側 Col 5 ダミー
-        
-        , <&gpio0  4 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)> // 右手側 Col 0 (物理 D4)
-        , <&gpio0  5 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)> // 右手側 Col 1 (物理 D5)
-        , <&gpio1 15 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)> // 右手側 Col 2 (物理 D10)
-        , <&gpio1 12 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)> // 右手側 Col 3 (物理 D7)
-        , <&gpio1 13 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)> // 右手側 Col 4 (物理 D8)
+        = <&xiao_d 4 GPIO_ACTIVE_HIGH>
+        , <&xiao_d 5 GPIO_ACTIVE_HIGH>
+        , <&xiao_d 7 GPIO_ACTIVE_HIGH>
+        , <&xiao_d 8 GPIO_ACTIVE_HIGH>
+        , <&xiao_d 9 GPIO_ACTIVE_HIGH>
         ;
 };

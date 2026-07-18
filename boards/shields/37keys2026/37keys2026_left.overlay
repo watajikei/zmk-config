@@ -1,12 +1,21 @@
 #include "37keys2026.dtsi"
 
 &kscan0 {
+    // 行（4本）：D0, D1, D2, D3
+    row-gpios
+        = <&xiao_d 0 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
+        , <&xiao_d 1 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
+        , <&xiao_d 2 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
+        , <&xiao_d 3 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
+        ;
+
+    // 列（6本）：D4, D5, （D6をスキップ）, D7, D8, D9, D10
     col-gpios
-        = <&gpio0  4 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)> // D4
-        , <&gpio0  5 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)> // D5
-        , <&gpio1 15 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)> // D10 (D6回避用の代替割り当て)
-        , <&gpio1 12 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)> // D7
-        , <&gpio1 13 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)> // D8
-        , <&gpio1 14 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)> // D9
+        = <&xiao_d 4 GPIO_ACTIVE_HIGH>
+        , <&xiao_d 5 GPIO_ACTIVE_HIGH>
+        , <&xiao_d 7 GPIO_ACTIVE_HIGH>
+        , <&xiao_d 8 GPIO_ACTIVE_HIGH>
+        , <&xiao_d 9 GPIO_ACTIVE_HIGH>
+        , <&xiao_d 10 GPIO_ACTIVE_HIGH>
         ;
 };
