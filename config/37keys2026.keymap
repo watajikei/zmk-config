@@ -9,7 +9,7 @@
         default_layer {
             bindings = <
                 // === Row 0 (左手 6キー / 右手 5キー = 計11キー) ===
-                &bt BT_CLR_ALL   &kp Q          &kp W          &kp E          &kp R          &kp T             &kp Y          &kp U          &kp I          &kp O          &kp P
+                &kp A   &kp Q          &kp W          &kp E          &kp R          &kp T             &kp Y          &kp U          &kp I          &kp O          &kp P
                 
                 // === Row 1 (左手 6キー / 右手 5キー = 計11キー) ===
                 &kp A            &kp S          &kp D          &kp F          &kp G          &kp H             &kp J          &kp K          &kp L          &kp SEMI       &kp Z
