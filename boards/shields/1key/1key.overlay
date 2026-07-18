@@ -2,8 +2,16 @@
 
 / {
     chosen {
-        zephyr,kscan = &kscan0;
-        zmk,matrix-transform = &default_transform;
+        // 最新仕様：kscanとtransformを内包したphysical-layoutを直接指定する
+        zmk,physical-layout = &default_layout;
+    };
+
+    // 新設：最新のZMKコアが要求する物理レイアウト定義
+    default_layout: default_layout {
+        compatible = "zmk,physical-layout";
+        display-name = "Default Layout";
+        transform = <&default_transform>;
+        kscan = <&kscan0>;
     };
 
     default_transform: matrix_transform {
