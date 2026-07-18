@@ -1,2 +1,2 @@
-board: [xiao_ble]
+board: ["xiao_ble//zmk"]
 shield: [1key]
