@@ -1,13 +1,13 @@
 #include <behaviors.dtsi>
 #include <dt-bindings/zmk/keys.h>
+#include <dt-bindings/zmk/bt.h> // ★Bluetooth制御用の定義を読み込む
 
 / {
     keymap {
         compatible = "zmk,keymap";
         default_layer {
-            bindings = <
-                &kp A
-            >;
+            // 文字入力ではなく、Bluetoothのペアリング情報を初期化して強制アドバタイズするコードに変更
+            bindings = <&bt BT_CLR>; 
         };
     };
 };
