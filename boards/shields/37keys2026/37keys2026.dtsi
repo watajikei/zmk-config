@@ -87,10 +87,7 @@
     };
 };
 
+/* D6ピン(P1.11)解放のためにUART0のみを無効化 */
 &uart0 {
-    status = "disabled";
-};
-
-&cdc_acm_uart {
     status = "disabled";
 };
