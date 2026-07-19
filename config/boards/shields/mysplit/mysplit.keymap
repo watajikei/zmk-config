@@ -8,13 +8,15 @@
 
         default_layer {
             // -----------------------------------------------------------------------------------
-            //  Q  W  E  R  T  Y  |  U  I  O    P    BSPC
-            //  A  S  D  F  G  H  |  J  K  L    ;    '
+            // TEMPORARY layout for entering the Windows BLE passkey using only
+            // the left half (D0-D3 = rows, D4/D5/D7/D8/D9/D10 = cols):
+            //  1  2  3  4  5  6  |  U  I  O    P    BSPC
+            //  7  8  9  0  ENT S |  J  K  L    ;    '
             //  Z  X  C  V  B  N  |  M  ,  .    /    ENTER
             //           GUI LOWER|  RAISE SPC
             bindings = <
-&kp Q &kp W &kp E &kp R &kp T &kp Y      &kp U    &kp I     &kp O    &kp P     &kp BSPC
-&kp A &kp S &kp D &kp F &kp G &kp H      &kp J    &kp K     &kp L    &kp SEMI  &kp SQT
+&kp N1 &kp N2 &kp N3 &kp N4 &kp N5 &kp N6      &kp U    &kp I     &kp O    &kp P     &kp BSPC
+&kp N7 &kp N8 &kp N9 &kp N0 &kp ENTER &kp S    &kp J    &kp K     &kp L    &kp SEMI  &kp SQT
 &kp Z &kp X &kp C &kp V &kp B &kp N      &kp M    &kp COMMA &kp DOT  &kp FSLH  &kp ENTER
                   &kp LGUI &mo 1          &mo 2    &kp SPACE
             >;

@@ -18,4 +18,8 @@ config ZMK_SPLIT
 config BT_CTLR_PHY_2M
     default n
 
+# Windows requires authenticated (MITM) pairing for BLE keyboards.
+config ZMK_BLE_PASSKEY_ENTRY
+    default y
+
 endif # SHIELD_MYSPLIT_LEFT || SHIELD_MYSPLIT_RIGHT
