@@ -18,8 +18,4 @@ config ZMK_SPLIT
 config BT_CTLR_PHY_2M
     default n
 
-# Some Windows PCs need passkey-based pairing instead of "just works".
-config ZMK_BLE_PASSKEY_ENTRY
-    default y
-
 endif # SHIELD_MYSPLIT_LEFT || SHIELD_MYSPLIT_RIGHT
