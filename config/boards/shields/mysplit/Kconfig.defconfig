@@ -18,4 +18,16 @@ config ZMK_SPLIT
 config ZMK_BLE
     default n
 
+# TEMPORARY: USB serial logging for matrix wiring debug.
+# After flashing, connect via a serial terminal (PuTTY etc, 115200 baud)
+# to the USB CDC ACM COM port to see live kscan events.
+config ZMK_USB_LOGGING
+    default y
+
+config LOG
+    default y
+
+config INPUT_LOG_LEVEL_DBG
+    default y
+
 endif # SHIELD_MYSPLIT_LEFT || SHIELD_MYSPLIT_RIGHT
