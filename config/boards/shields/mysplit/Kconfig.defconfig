@@ -13,18 +13,9 @@ if SHIELD_MYSPLIT_LEFT || SHIELD_MYSPLIT_RIGHT
 config ZMK_SPLIT
     default y
 
-# TEMPORARY: force USB-only output while debugging matrix wiring.
-# Remove this once BLE pairing works and you want wireless operation.
-config ZMK_BLE
+# Some Windows Bluetooth chipsets (Realtek/Intel) fail to pair when
+# the 2Mbps PHY is advertised. Disabling it is a known workaround.
+config BT_CTLR_PHY_2M
     default n
-
-# TEMPORARY: USB serial logging for matrix wiring debug.
-# After flashing, connect via a serial terminal (PuTTY etc, 115200 baud)
-# to the USB CDC ACM COM port to see live kscan events.
-config ZMK_USB_LOGGING
-    default y
-
-config LOG
-    default y
 
 endif # SHIELD_MYSPLIT_LEFT || SHIELD_MYSPLIT_RIGHT
