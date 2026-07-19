@@ -27,7 +27,4 @@ config ZMK_USB_LOGGING
 config LOG
     default y
 
-config INPUT_LOG_LEVEL_DBG
-    default y
-
 endif # SHIELD_MYSPLIT_LEFT || SHIELD_MYSPLIT_RIGHT
