@@ -8,18 +8,14 @@
 
         default_layer {
             // -----------------------------------------------------------------------------------
-            //  TAB  Q  W  E  R  T  |  U  I  O    P    BSPC
-            //  SHFT A  S  D  F  G  |  J  K  L    ;    '
-            //  CTRL Z  X  C  V  B  |  M  ,  .    /    ENTER
-            //            GUI SPC  |  RAISE SPC
-            // NOTE: Y, H, N no longer fit on the left half and were dropped
-            // from this layer. NOTE: the left thumb's LOWER-layer access
-            // (&mo 1) was replaced with Space, so the lower_layer below is
-            // currently unreachable - let me know if you want it re-added
-            // somewhere (e.g. a right-hand thumb combo).
+            // TEMPORARY: pairing/passkey-entry layout on the left half's top two rows
+            //  1  2  3  4  5  6  |  U  I  O    P    BSPC
+            //  7  8  9  0  ENT G |  J  K  L    ;    '
+            //  CTRL Z  X  C  V  B|  M  ,  .    /    ENTER
+            //            GUI SPC|  RAISE SPC
             bindings = <
-&kp TAB  &kp Q &kp W &kp E &kp R &kp T      &kp U    &kp I     &kp O    &kp P     &kp BSPC
-&kp LSHFT &kp A &kp S &kp D &kp F &kp G     &kp J    &kp K     &kp L    &kp SEMI  &kp SQT
+&kp N1  &kp N2 &kp N3 &kp N4 &kp N5 &kp N6      &kp U    &kp I     &kp O    &kp P     &kp BSPC
+&kp N7  &kp N8 &kp N9 &kp N0 &kp ENTER &kp G     &kp J    &kp K     &kp L    &kp SEMI  &kp SQT
 &kp LCTRL &kp Z &kp X &kp C &kp V &kp B     &kp M    &kp COMMA &kp DOT  &kp FSLH  &kp ENTER
                     &kp LGUI &kp SPACE       &mo 2    &kp SPACE
             >;
