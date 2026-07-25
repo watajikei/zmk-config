@@ -101,7 +101,7 @@
 
         macro_layer {
             bindings = <
-&trans &trans  &none      &kp KP_N8 &kp LG(E) &kp LG(R)      &macro_0 &macro_1 &trans   &trans   &trans
+&trans &bt BT_SEL 0  &bt BT_SEL 1      &kp KP_N8 &kp LG(E) &kp LG(R)      &macro_0 &macro_1 &trans   &bt BT_CLR   &trans
 &trans &trans  &kp KP_N4  &kp KP_N2 &kp LG(D) &kp LS(LG(S))  &trans   &trans   &trans   &macro_4 &trans
 &trans &trans  &trans     &trans    &trans    &bootloader    &bootloader &trans   &trans   &trans   &trans
                            &trans &trans                      &trans &trans
