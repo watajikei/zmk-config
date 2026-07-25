@@ -22,4 +22,12 @@ config BT_CTLR_PHY_2M
 config ZMK_BLE_PASSKEY_ENTRY
     default y
 
+# Save battery by entering deep sleep when idle.
+config ZMK_SLEEP
+    default y
+
+# Report battery level to the host.
+config ZMK_BATTERY_REPORTING
+    default y
+
 endif # SHIELD_MYSPLIT_LEFT || SHIELD_MYSPLIT_RIGHT
