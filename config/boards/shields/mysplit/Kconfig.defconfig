@@ -21,6 +21,11 @@ config ZMK_BLE
 config ZMK_USB
     default y
 
+# The USB HID class driver isn't being auto-selected under v0.3 for this
+# board - force it on so usb_hid.c actually links.
+config USB_HID_DEVICE
+    default y
+
 # Save battery by entering deep sleep when idle.
 config ZMK_SLEEP
     default y
