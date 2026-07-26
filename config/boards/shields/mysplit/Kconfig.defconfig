@@ -24,6 +24,15 @@ config ZMK_SPLIT
 config ZMK_BLE
     default y
 
+# Some Windows Bluetooth chipsets (Realtek/Intel) fail to pair when
+# the 2Mbps PHY is advertised. Disabling it is a known workaround.
+config BT_CTLR_PHY_2M
+    default n
+
+# Windows requires authenticated (MITM) pairing for BLE keyboards.
+config ZMK_BLE_PASSKEY_ENTRY
+    default y
+
 # Save battery by entering deep sleep when idle.
 config ZMK_SLEEP
     default y
