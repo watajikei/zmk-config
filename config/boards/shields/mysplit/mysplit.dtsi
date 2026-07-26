@@ -51,3 +51,10 @@ RC(2,0) RC(2,1) RC(2,2) RC(2,3) RC(2,4) RC(2,5)   RC(2,6) RC(2,7) RC(2,8) RC(2,9
 &qspi {
     status = "disabled";
 };
+
+// A child node does not inherit the parent's disabled status, and
+// p25q16h declares none of its own, so the flash driver would still
+// bind to it. Disable it explicitly too.
+&p25q16h {
+    status = "disabled";
+};
