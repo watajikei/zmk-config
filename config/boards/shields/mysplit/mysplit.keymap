@@ -83,8 +83,8 @@
 
         nav_layer {
             bindings = <
-&trans &kp GRAVE  &kp TAB  &kp UP    &trans &trans     &trans &trans &kp SQT  &trans    &kp LBKT
-&trans &kp ESC    &kp LEFT &kp DOWN  &kp RIGHT &trans  &trans &trans &kp HOME &kp PG_UP &kp BSPC
+&kp GRAVE &kp GRAVE  &kp TAB  &kp UP    &trans &trans     &trans &trans &kp SQT  &trans    &kp LBKT
+&kp ESC   &kp ESC    &kp LEFT &kp DOWN  &kp RIGHT &trans  &trans &trans &kp HOME &kp PG_UP &kp BSPC
 &trans &kp F2     &trans   &trans    &trans &kp LS(INT_RO)    &trans &kp DEL &kp END  &kp PG_DN &kp INT_RO
                             &trans &trans                     &trans &trans
             >;
