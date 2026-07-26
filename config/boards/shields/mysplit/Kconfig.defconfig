@@ -6,6 +6,12 @@ config ZMK_KEYBOARD_NAME
 config ZMK_SPLIT_ROLE_CENTRAL
     default y
 
+# Only the central side exposes a USB HID device - src/hid.c (which
+# usb_hid.c depends on) is only compiled for the central role, so
+# forcing this on for the peripheral breaks the link.
+config ZMK_USB
+    default y
+
 endif # SHIELD_MYSPLIT_LEFT
 
 if SHIELD_MYSPLIT_LEFT || SHIELD_MYSPLIT_RIGHT
@@ -16,9 +22,6 @@ config ZMK_SPLIT
 # Explicitly force these on - v0.3's xiao_ble board doesn't seem to
 # default them to y the way main does.
 config ZMK_BLE
-    default y
-
-config ZMK_USB
     default y
 
 # Save battery by entering deep sleep when idle.
