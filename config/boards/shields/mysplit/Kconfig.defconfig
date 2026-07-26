@@ -33,6 +33,20 @@ config BT_CTLR_PHY_2M
 config ZMK_BLE_PASSKEY_ENTRY
     default y
 
+# Without this, re-pairing to a host that already has a (possibly
+# unauthenticated) bond can leave the encryption key out of sync -
+# pairing appears to succeed but the host never gets real HID
+# notifications afterward. Allows the new authenticated key to
+# properly overwrite the old one.
+config ZMK_BLE_EXPERIMENTAL_SEC
+    default y
+
+# Known Windows bug: it sometimes doesn't correctly subscribe to GATT
+# notifications after pairing, so HID reports get silently dropped
+# even though the connection shows as active. This works around it.
+config BT_GATT_ENFORCE_SUBSCRIPTION
+    default n
+
 # Save battery by entering deep sleep when idle.
 config ZMK_SLEEP
     default y
