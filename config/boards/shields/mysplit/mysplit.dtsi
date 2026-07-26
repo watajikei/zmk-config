@@ -39,3 +39,15 @@ RC(2,0) RC(2,1) RC(2,2) RC(2,3) RC(2,4) RC(2,5)   RC(2,6) RC(2,7) RC(2,8) RC(2,9
 &uart0 {
     status = "disabled";
 };
+
+// Disable the unused external QSPI flash (P25Q16H) to save battery.
+//
+// ZMK stores everything - firmware, bootloader, and BLE bonds via NVS -
+// in the SoC's internal flash0, so this separate 2MB chip is never used.
+// It only became active as a side effect of enabling CONFIG_FLASH for
+// NVS, which also pulls in CONFIG_NORDIC_QSPI_NOR. Leaving it
+// initialized keeps the nRF's QSPI peripheral running, which is a
+// documented ~1mA drain on this board - fatal for a CR2032.
+&qspi {
+    status = "disabled";
+};
