@@ -13,6 +13,14 @@ if SHIELD_MYSPLIT_LEFT || SHIELD_MYSPLIT_RIGHT
 config ZMK_SPLIT
     default y
 
+# Explicitly force these on - v0.3's xiao_ble board doesn't seem to
+# default them to y the way main does.
+config ZMK_BLE
+    default y
+
+config ZMK_USB
+    default y
+
 # Save battery by entering deep sleep when idle.
 config ZMK_SLEEP
     default y
