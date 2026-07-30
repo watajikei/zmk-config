@@ -3,6 +3,23 @@
 #include <dt-bindings/zmk/bt.h>
 
 / {
+    behaviors {
+        // Right pinky Shift / minus.
+        //
+        // The built-in &mt is "hold-preferred", which commits to the
+        // hold as soon as any other key goes down inside the tapping
+        // term - so Shift kept firing when typing quickly. With
+        // "tap-preferred" the decision waits for the full term, so it
+        // only becomes Shift if the key is genuinely held that long.
+        mt_pinky: mod_tap_pinky {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            bindings = <&kp>, <&kp>;
+            flavor = "tap-preferred";
+            tapping-term-ms = <200>;
+        };
+    };
+
     macros {
         macro_0: macro_0 {
             compatible = "zmk,behavior-macro";
@@ -75,7 +92,7 @@
             // Right half and thumb columns are unchanged from the old layout.
             bindings = <
 &kp TAB   &kp Q          &kp W  &kp E  &kp R  &kp T        &kp Y  &kp U  &kp I    &kp O    &kp P
-&kp LSHFT &kp A          &kp S  &kp D  &kp F  &kp G        &kp H  &kp J  &kp K    &kp L    &mt LSHFT MINUS
+&kp LSHFT &kp A          &kp S  &kp D  &kp F  &kp G        &kp H  &kp J  &kp K    &kp L    &mt_pinky LSHFT MINUS
 &kp LCTRL &kp Z          &kp X  &kp C  &kp V  &kp B        &kp N  &kp M  &kp COMMA &kp DOT &kp FSLH
                           &kp LC(Z) &lt 1 SPACE             &lt 2 ENTER &mo 3
             >;
